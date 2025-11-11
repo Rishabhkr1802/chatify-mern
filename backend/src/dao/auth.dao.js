@@ -24,15 +24,16 @@ export async function createUser(user) {
     try {
         if (!user) return;
         const userDetails = {
-            name        : user.name,
-            email       : user.email,
-            bio         : user.bio,
-            profilePic  : user.profilePic,
-            password    : user.password,
+            name        : user?.name,
+            email       : user?.email,
+            bio         : user?.bio,
+            profilePic  : user?.profilePic,
+            password    : user?.password,
         }
         const newUser = await User.create(userDetails);
-        return newUser;
+        const savedUser = await newUser.save();
+        return savedUser;
     } catch (error) {
-        console.log("Error occuring during findUserByIdDao : ",error );
+        console.log("Error occuring during createUserDao : ",error );
     }
 }

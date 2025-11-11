@@ -23,8 +23,8 @@ export async function findUserByIdService(id) {
 export async function createUserService(user) {
     if (!user) return;
     try {
-        const user = await createUser(user);
-        return user;
+        const newUser = await createUser(user);
+        return newUser;
     } catch (error) {
         console.log("Error occuring during createUserService: ", error);
     }
