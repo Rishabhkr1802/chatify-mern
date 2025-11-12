@@ -21,15 +21,45 @@ export async function signup(req, res) {
 
         return res.status(201).json({status: true, message: "User has register succesfully", user: newUser});
     } catch (error) {
-        console.log("Error occuring during signup controller: ", error);
+        console.log("Error occuring during Signup controller: ", error);
         return res.status(500).json({status: false, message: "Internal Server Error"});
     }
 }
 
-export function login(req, res) {
-    return res.status(200).json({status: true, message: "User login has successful"});
+export async function login(req, res) {
+    try {
+        const { email, password } = req.body;
+        const emailRegrex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !password)        return res.status(400).json({ success: false, message: "All field are required"});
+        if (!emailRegrex.test(email))   return res.status(400).json({ success: false, message: "Invalid email format"});
+        if (password.length < 6)        return res.status(400).json({success: false, message: "Password must be atleast 6 characters"});
+
+        const user = await findUserByEmailService(email);
+        if (!user) return res.status(400).json({ success: false, message: "Invalid Email"});
+
+        const isPasswordCorrect = await user.matchPassword(password);
+        if (!isPasswordCorrect) return res.status(400).json({success: false, message: "Invalid Password"});
+
+        const token = await generateJWTToken(user?._id, res);
+        if (!token) return res.status(401).json({success: false, message: "Something went wrong"});
+
+        const userOj = user.toObject();
+        delete userOj?.password;
+
+        return res.status(200).json({status: true, message: "Login Successfully", user: userOj, token});
+
+    } catch (error) {
+        console.log("Error occur during Login controller: ", error);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
 }
 
 export function logout(req, res) {
-    return res.status(200).json({status: true, message: "User has logout successfully"});
+    try {
+        res.clearCookie('jwt');
+        return res.status(200).json({status: true, message: "Logout Successfully"});
+    } catch (error) {
+        console.log("Error occur during Logout controller: ", error);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
 }
