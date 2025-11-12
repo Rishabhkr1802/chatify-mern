@@ -1,5 +1,6 @@
-import { createUserService, findUserByEmailService } from "../services/auth.service.js";
+import { createUserService, findUserByEmailService, findUserByIdAndUpdateService } from "../services/auth.service.js";
 import { generateJWTToken } from "../utils/helper.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export async function signup(req, res) {
     try {
@@ -60,6 +61,34 @@ export function logout(req, res) {
         return res.status(200).json({status: true, message: "Logout Successfully"});
     } catch (error) {
         console.log("Error occur during Logout controller: ", error);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
+}
+
+export async function updateProfile(req, res) {
+    try {
+        const { bio, profilePic } = req.body;
+        const userID = req.user?._id;
+        if (!bio || !profilePic) return res.status(400).json({success: false, message: "All fields are required"});
+
+        const uploadImageToCloudinary = await cloudinary.uploader.upload(profilePic);
+        const imageUrl = uploadImageToCloudinary.secure_url;
+
+        const updatedUser = await findUserByIdAndUpdateService(userID, {profilePic: imageUrl, bio});
+        return res.status(200).json({ success: true, message: "User information has updated successfully", updatedUser });
+
+    } catch (error) {
+        console.log("Error occur during updateProfile controller: ", error);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
+}
+
+export async function checkAuth(req, res) {
+    try {
+        const myId = req?.user;
+        return res.status(200).json({status: true, message: "Autheticated", user: myId});
+    } catch (error) {
+        console.log("Error occur during checkAuth controller: ", error);
         res.status(500).json({success: false, message: "Internal Server Error"});
     }
 }

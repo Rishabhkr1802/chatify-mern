@@ -10,3 +10,8 @@ export async function generateJWTToken(id, res) {
         });
     return token;
 }
+
+export function verifyJWTToken(token) {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    return decodedToken;
+}

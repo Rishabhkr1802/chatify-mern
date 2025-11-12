@@ -1,4 +1,4 @@
-import { createUser, findUserByEmail, findUserById } from "../dao/auth.dao.js";
+import { createUser, findUserByEmail, findUserById, findUserByIdAndUpdate } from "../dao/auth.dao.js";
 
 export async function findUserByEmailService(email) {
     if (!email) return;
@@ -30,3 +30,12 @@ export async function createUserService(user) {
     }
 }
 
+export async function findUserByIdAndUpdateService(id, user) {
+    if (!user || !id) return;
+    try {
+        const newUser = await findUserByIdAndUpdate(id, user);
+        return newUser;
+    } catch (error) {
+        console.log("Error occuring during findUserByIdAndUpdateService: ", error);
+    }
+}

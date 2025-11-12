@@ -13,7 +13,7 @@ export async function findUserByEmail(email) {
 export async function findUserById(id) {
     try {
         if (!id) return;
-        const user = await User.findOne({id});
+        const user = await User.findById(id).select("-password");
         return user;
     } catch (error) {
         console.log("Error occuring during findUserByIdDao : ",error );
@@ -35,5 +35,14 @@ export async function createUser(user) {
         return savedUser;
     } catch (error) {
         console.log("Error occuring during createUserDao : ",error );
+    }
+}
+
+export async function findUserByIdAndUpdate(id, updatedUser) {
+    try {
+        const user = await User.findByIdAndUpdate(id, updatedUser, {new: true});
+        return user;
+    } catch (error) {
+        console.log("Error occuring during findUserByIdAndUpdate Dao : ",error );
     }
 }
