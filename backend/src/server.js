@@ -3,7 +3,8 @@ import dotenv           from "dotenv";
 import cookieparser     from "cookie-parser";
 import { connectDB }    from "./db/database.config.js";
 
-import authRouter       from "./routes/auth.route.js";
+import authRoutes       from "./routes/auth.route.js";
+import messageRoutes    from "./routes/message.route.js";
 
 dotenv.config({
     path: "./.env",
@@ -17,7 +18,8 @@ app.use(express.urlencoded({extended: 'false', limit: '20kb'})) //For Accept dat
 app.use(express.static("uploads"));
 app.use(cookieparser());
 
-app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/message", messageRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}`);

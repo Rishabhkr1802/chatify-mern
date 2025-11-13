@@ -1,0 +1,51 @@
+import { sendMessageService } from "../services/message.service.js";
+import User from "../models/User.model.js";
+
+export function getAllMessages(req, res) {
+  try {
+    const { id: receiverID } = req.params;
+    const senderID = req.user?._id;
+    console.log("receiverId", receiverID)
+    console.log("senderID", senderID)
+    return res.status(200).json({ success: true, message: "Fetch messages successfully" });
+
+  } catch (error) {
+    console.log("Error occur during getAllMessages controller: ", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+
+export async function sendMessage(req, res) {
+  try {
+    const { id: userToChatID }  = req.params;
+    const { text, image }       = req.body;
+    const myID                  = req.user?._id;
+
+    if (!text && !image) {
+      return res.status(400).json({ message: "Text or image is required." });
+    }
+    if (myID.equals(userToChatID)) {
+      return res.status(400).json({ message: "Cannot send messages to yourself." });
+    }
+    const receiverExists = await User.exists({ _id: userToChatID });
+    if (!receiverExists) {
+      return res.status(404).json({ message: "Receiver not found." });
+    }
+
+    let imageUrl;
+    if (image) {
+      const uploadedResponse = cloudinary.uploader.upload(image);
+      imageUrl = uploadedResponse?.secure_url;
+    }
+    const sendMessage = sendMessageService(myID, userToChatID, { text, imageUrl });
+    if (sendMessage) {
+      return res.status(200).json({ success: true, message: "send messages successfully" });
+    } else {
+      res.status(422).json({ success: false, message: "Something went wrong" });
+    }
+
+  } catch (error) {
+    console.log("Error occur during sendMessage controller: ", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}

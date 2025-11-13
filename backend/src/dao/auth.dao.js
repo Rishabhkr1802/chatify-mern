@@ -40,7 +40,7 @@ export async function createUser(user) {
 
 export async function findUserByIdAndUpdate(id, updatedUser) {
     try {
-        const user = await User.findByIdAndUpdate(id, updatedUser, {new: true});
+        const user = await User.findByIdAndUpdate(id, updatedUser, {new: true}).select("-password");
         return user;
     } catch (error) {
         console.log("Error occuring during findUserByIdAndUpdate Dao : ",error );
