@@ -1,12 +1,11 @@
-import { sendMessageService } from "../services/message.service.js";
+import { getMessagesService, sendMessageService } from "../services/message.service.js";
 import User from "../models/User.model.js";
 
 export function getAllMessages(req, res) {
   try {
     const { id: receiverID } = req.params;
     const senderID = req.user?._id;
-    console.log("receiverId", receiverID)
-    console.log("senderID", senderID)
+    getMessagesService(senderID, receiverID);
     return res.status(200).json({ success: true, message: "Fetch messages successfully" });
 
   } catch (error) {

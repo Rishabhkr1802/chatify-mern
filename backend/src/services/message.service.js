@@ -1,4 +1,4 @@
-import { sendMessageDao } from "../dao/message.dao.js";
+import { getMessagesDao, sendMessageDao } from "../dao/message.dao.js";
 
 export function sendMessageService(myID, userToChatID, { text, imageUrl }) {
   try {
@@ -9,6 +9,16 @@ export function sendMessageService(myID, userToChatID, { text, imageUrl }) {
       image       : imageUrl || '',
     }
     const message = sendMessageDao(messageFormat);
+    return message;
+  } catch (error) {
+    console.log("Error occur during sendMessageService : ", error);
+  }
+}
+
+export function getMessagesService(senderID, receiverID) {
+  try {
+    if(!senderID || !receiverID) return;
+    const message = getMessagesDao(senderID, receiverID);
     return message;
   } catch (error) {
     console.log("Error occur during sendMessageService : ", error);
