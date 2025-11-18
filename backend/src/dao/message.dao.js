@@ -23,8 +23,12 @@ export async function sendMessageDao(messageInfo) {
 export async function getMessagesDao(senderID, receiverID) {
   try {
     const messages = await find({
-      $or: {senderID: senderID, receiverID: receiverID, receiverID: senderID, senderID: receiverID}
-    })
+      $or: [
+        { senderID: receiverID, receiverID: senderID },
+        { senderID: senderID, receiverID: receiverID },
+      ]
+    });
+    return messages;
   } catch (error) {
     console.log("Error occur during getMessagesDao : ", error);
   }

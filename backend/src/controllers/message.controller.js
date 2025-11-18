@@ -5,8 +5,8 @@ export function getAllMessages(req, res) {
   try {
     const { id: receiverID } = req.params;
     const senderID = req.user?._id;
-    getMessagesService(senderID, receiverID);
-    return res.status(200).json({ success: true, message: "Fetch messages successfully" });
+    const message = getMessagesService(senderID, receiverID);
+    return res.status(200).json({ success: true, data: message, message: "message fetched sucessfully" });
 
   } catch (error) {
     console.log("Error occur during getAllMessages controller: ", error);
