@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Message from "../models/Message.model.js";
 
 export async function sendMessageDao(messageInfo) {
@@ -22,7 +21,7 @@ export async function sendMessageDao(messageInfo) {
 
 export async function getMessagesDao(senderID, receiverID) {
   try {
-    const messages = await find({
+    const messages = await Message.find({
       $or: [
         { senderID: receiverID, receiverID: senderID },
         { senderID: senderID, receiverID: receiverID },

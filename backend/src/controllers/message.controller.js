@@ -1,11 +1,11 @@
 import { getMessagesService, sendMessageService } from "../services/message.service.js";
 import User from "../models/User.model.js";
 
-export function getAllMessages(req, res) {
+export async function getAllMessages(req, res) {
   try {
     const { id: receiverID } = req.params;
     const senderID = req.user?._id;
-    const message = getMessagesService(senderID, receiverID);
+    const message = await getMessagesService(senderID, receiverID);
     return res.status(200).json({ success: true, data: message, message: "message fetched sucessfully" });
 
   } catch (error) {

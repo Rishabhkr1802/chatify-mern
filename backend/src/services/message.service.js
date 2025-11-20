@@ -15,10 +15,10 @@ export function sendMessageService(myID, userToChatID, { text, imageUrl }) {
   }
 }
 
-export function getMessagesService(senderID, receiverID) {
+export async function getMessagesService(senderID, receiverID) {
   try {
     if(!senderID || !receiverID) return;
-    const message = getMessagesDao(senderID, receiverID);
+    const message = await getMessagesDao(senderID, receiverID);
     return message;
   } catch (error) {
     console.log("Error occur during sendMessageService : ", error);
