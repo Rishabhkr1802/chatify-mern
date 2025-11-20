@@ -5,13 +5,16 @@ import { connectDB }    from "./db/database.config.js";
 
 import authRoutes       from "./routes/auth.route.js";
 import messageRoutes    from "./routes/message.route.js";
+import userRoutes       from "./routes/user.route.js";
+
+import { app, server } from "./socket/socketio.js";
 
 dotenv.config({
     path: "./.env",
 });
 
 const port  = process.env.PORT || 3000;
-const app   = express();
+// const app   = express();
 
 app.use(express.json({limit: '20kb'})) //For Accept form input
 app.use(express.urlencoded({extended: 'false', limit: '20kb'})) //For Accept data from URL like id,queryParams etc
@@ -20,8 +23,9 @@ app.use(cookieparser());
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/user",userRoutes);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running at ${port}`);
     connectDB();
 });

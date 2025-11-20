@@ -1,4 +1,5 @@
 import { getMessagesService, sendMessageService } from "../services/message.service.js";
+import { getReceiverSocketId, io } from "../socket/socketio.js";
 import User from "../models/User.model.js";
 
 export async function getAllMessages(req, res) {
@@ -37,6 +38,13 @@ export async function sendMessage(req, res) {
       imageUrl = uploadedResponse?.secure_url;
     }
     const sendMessage = sendMessageService(myID, userToChatID, { text, imageUrl });
+
+    const receiverSocketId = getReceiverSocketId(userToChatID);
+		if (receiverSocketId) {
+			// io.to(<socket_id>).emit() used to send events to specific client
+			io.to(receiverSocketId).emit("newMessage", newMessage);
+		}
+
     if (sendMessage) {
       return res.status(200).json({ success: true, message: "send messages successfully" });
     } else {
