@@ -13,6 +13,19 @@ const routes = createBrowserRouter([
     { path: "/",          element: <Layout sidebar={true} />, children: [
       { index: true , element: <Dashboard />}
     ]},
+  //   {
+  //   path: "/",
+  //   element: <ProtectedRoute />, 
+  //   children: [
+  //     {
+  //       path: "/",
+  //       element: <Layout sidebar={true} />,
+  //       children: [
+  //         { index: true, element: <Dashboard /> }
+  //       ]
+  //     }
+  //   ]
+  // }
 ]);
 
 function Router() {

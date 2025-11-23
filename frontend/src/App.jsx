@@ -2,7 +2,9 @@ import Router from "./routes/Router";
 
 function App() {
   return (
-    <Router />
+    <div data-theme="light" className="font-poppins">
+      <Router />
+    </div>
   );
 }
 
