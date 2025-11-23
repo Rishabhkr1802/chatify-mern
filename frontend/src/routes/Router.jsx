@@ -1,31 +1,27 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
 
-const Layout    = lazy( () => import("../sharedComponents/Layout"));
-const Login     = lazy( () => import("../pages/Login"));
-const Loader    = lazy( () => import("../sharedComponents/Loader"));
-const Register  = lazy( () => import("../pages/Register"));
+const Layout          = lazy( () => import("../sharedComponents/Layout"));
+const Login           = lazy( () => import("../pages/Login"));
+const Loader          = lazy( () => import("../sharedComponents/Loader"));
+const Register        = lazy( () => import("../pages/Register"));
+const Dashboard       = lazy( () => import("../pages/Dashboard"));
+const ProtectedRoute  = lazy( () => import("./ProtectedRoute"));
 
 const routes = createBrowserRouter([
     { path: "/login",     element: <Login /> },
     { path: "/register",  element: <Register /> },
-    { path: "/",          element: <Layout sidebar={true} />, children: [
-      { index: true , element: <Dashboard />}
-    ]},
-  //   {
-  //   path: "/",
-  //   element: <ProtectedRoute />, 
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: <Layout sidebar={true} />,
-  //       children: [
-  //         { index: true, element: <Dashboard /> }
-  //       ]
-  //     }
-  //   ]
-  // }
+    { path: "/",          element: <ProtectedRoute />, children: [
+      { path: "/", element: <Layout sidebar={true} />, children: [
+          { index: true, element: <Dashboard /> },
+        ]
+      }
+    ]
+  },
+  { path: "*", element: "404 Not Found"},
+  // { path: "/",          element: <Layout sidebar={true} />, children: [
+  //   { index: true , element: <Dashboard />}
+  // ]},
 ]);
 
 function Router() {

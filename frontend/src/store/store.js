@@ -1,17 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./AuthSlice.js";
 
 const store = configureStore({
-  // isAuthenticated: false,
-  // isSignup: false,
-  // isLoggedin: false,
-
-  // auth: () => { },
-  // signUp: () => { },
-  // login: () => { },
   reducer: {
-    // auth: authReducer,
+    auth: authReducer,
   },
 });
-
 
 export default store;
