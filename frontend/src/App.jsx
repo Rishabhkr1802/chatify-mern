@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import Router from "./routes/Router";
 import { useDispatch } from "react-redux";
-// import { fetchMe } from "./store/AuthSlice";
+import { checkAuthThunk } from "./store/AuthSlice";
+import Router from "./routes/Router";
 
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchMe());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(checkAuthThunk());
+  }, [dispatch]);
 
   return (
     <div data-theme="dark" className="font-poppins">

@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Eye, EyeOff, Lock, MailPlus, MessageSquareLock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../store/AuthSlice";
+import { Eye, EyeOff, Lock, MailPlus, MessageSquareLock } from "lucide-react";
 
 function Login() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -12,7 +15,7 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    dispatch(loginThunk(formData));
   }
 
   return (

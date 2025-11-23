@@ -47,7 +47,7 @@ export async function login(req, res) {
         const userOj = user.toObject();
         delete userOj?.password;
 
-        return res.status(200).json({status: true, message: "Login Successfully", user: userOj, token});
+        return res.status(200).json({status: true, message: "Login Successfully", user: userOj});
 
     } catch (error) {
         console.log("Error occur during Login controller: ", error);

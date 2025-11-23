@@ -13,7 +13,7 @@ export async function checkAuth() {
 export async function signupService(signupData) {
   try {
     const response = await axiosInstance.post(endpoints.signup,signupData);
-    return response.data;
+    return response;
   } catch (error) {
     console.log("Error occur during signupService api service: ", error);
   }
@@ -22,7 +22,7 @@ export async function signupService(signupData) {
 export async function loginService(loginData) {
   try {
     const response = await axiosInstance.post(endpoints.login,loginData);
-    return response.data;
+    return response;
   } catch (error) {
     console.log("Error occur during loginService api service: ", error);
   }
@@ -30,8 +30,8 @@ export async function loginService(loginData) {
 
 export async function logoutService() {
   try {
-    const response = await axiosInstance.get(endpoints.logout);
-    return response.data;
+    const response = await axiosInstance.post(endpoints.logout);
+    return response;
   } catch (error) {
     console.log("Error occur during logoutService api service: ", error);
   }

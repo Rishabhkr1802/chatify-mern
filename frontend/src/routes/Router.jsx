@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
+import { GuestRoute } from "./ProtectedRoute";
 
 const Layout          = lazy( () => import("../sharedComponents/Layout"));
 const Login           = lazy( () => import("../pages/Login"));
@@ -9,9 +10,12 @@ const Dashboard       = lazy( () => import("../pages/Dashboard"));
 const ProtectedRoute  = lazy( () => import("./ProtectedRoute"));
 
 const routes = createBrowserRouter([
-    { path: "/login",     element: <Login /> },
-    { path: "/register",  element: <Register /> },
-    { path: "/",          element: <ProtectedRoute />, children: [
+    { element: <GuestRoute />, children: [
+      { path: "/login",     element: <Login /> },
+      { path: "/register",  element: <Register /> },
+    ],
+  },
+    { path: "/", element: <ProtectedRoute />, children: [
       { path: "/", element: <Layout sidebar={true} />, children: [
           { index: true, element: <Dashboard /> },
         ]
@@ -19,9 +23,6 @@ const routes = createBrowserRouter([
     ]
   },
   { path: "*", element: "404 Not Found"},
-  // { path: "/",          element: <Layout sidebar={true} />, children: [
-  //   { index: true , element: <Dashboard />}
-  // ]},
 ]);
 
 function Router() {

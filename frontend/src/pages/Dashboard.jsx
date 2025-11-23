@@ -1,7 +1,7 @@
 function Dashboard() {
   return (
     <div>
-      Dashboard
+      <button className="btn btn-danger">Logout</button>
     </div>
   )
 }
