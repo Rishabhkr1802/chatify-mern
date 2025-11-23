@@ -16,7 +16,7 @@ export const checkAuthThunk = createAsyncThunk("auth/checkAuth",
       const response = await checkAuth();
       return response.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue("Unauthorized");
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Unauthorized");
     }
   }
 );
@@ -27,7 +27,7 @@ export const signupThunk = createAsyncThunk("auth/signup",
       const response = await signupService(signupData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || "Signup failed");
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Signup failed");
     }
   }
 );
@@ -38,7 +38,7 @@ export const loginThunk = createAsyncThunk("auth/login",
       const response = await loginService(loginData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || "Login failed");
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Login Failed");
     }
   }
 );
@@ -49,7 +49,7 @@ export const logoutThunk = createAsyncThunk("auth/logout",
       const response = await logoutService();
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue("Logout failed");
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Logout failed");
     }
   }
 );

@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Eye, EyeOff, Lock, MailPlus, MessageSquareShare, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signupThunk } from "../store/AuthSlice";
+import { Eye, EyeOff, Lock, MailPlus, MessageSquareShare, UserRound } from "lucide-react";
+import toast from "react-hot-toast";
 
 function Register() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -10,9 +14,18 @@ function Register() {
     setIsShowPassword((prev) => !prev);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    try {
+      const resultAction = await dispatch(signupThunk(formData));
+      if (signupThunk.fulfilled.match(resultAction)) {
+        toast.success(resultAction?.payload?.messages || "Registration Successfull!!!");
+      } else {
+        toast.error(resultAction.payload || "Registration Failed");
+      }
+    } catch (err) {
+      toast.error("Something went wrong!");
+    }
   }
 
   return (

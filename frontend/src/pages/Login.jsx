@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../store/AuthSlice";
 import { Eye, EyeOff, Lock, MailPlus, MessageSquareLock } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 function Login() {
   const dispatch = useDispatch();
@@ -13,9 +14,18 @@ function Login() {
     setIsShowPassword((prev) => !prev);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    dispatch(loginThunk(formData));
+    try {
+      const resultAction = await dispatch(loginThunk(formData));
+      if (loginThunk.fulfilled.match(resultAction)) {
+        toast.success(resultAction?.payload?.messages || "Login Successfull!!!");
+      } else {
+        toast.error(resultAction.payload || "Login Failed");
+      }
+    } catch (err) {
+      toast.error(resultAction.payload || "Something went wrong!");
+    }
   }
 
   return (
