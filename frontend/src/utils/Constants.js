@@ -4,4 +4,5 @@ export const endpoints = {
   login           : "/auth/login",
   logout          : "/auth/logout",
   updateProfile   : "/auth/update-profile",
+  getAllUser      : "/user/get-all-users",
 }

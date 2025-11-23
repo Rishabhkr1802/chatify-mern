@@ -15,7 +15,7 @@ export const checkAuthThunk = createAsyncThunk("auth/checkAuth",
     try {
       const response = await checkAuth();
       return response.data;
-    } catch (err) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "Unauthorized");
     }
   }

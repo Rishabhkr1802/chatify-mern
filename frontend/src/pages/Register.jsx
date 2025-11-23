@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signupThunk } from "../store/AuthSlice";
 import { Eye, EyeOff, Lock, MailPlus, MessageSquareShare, UserRound } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import Loader from "../sharedComponents/Loader";
 
 function Register() {
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const dispatch                            = useDispatch();
+  const { isLoading }                       = useSelector((state) => state.auth);
+  const [formData, setFormData]             = useState({ name: "", email: "", password: "" });
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   function showPassword() {
@@ -27,6 +29,8 @@ function Register() {
       toast.error("Something went wrong!");
     }
   }
+
+  if (isLoading) return <Loader />
 
   return (
     <main className="h-screen lg:w-5xl m-auto shadow-2xl md: p-4 bg-base-400">

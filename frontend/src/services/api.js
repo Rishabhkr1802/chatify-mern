@@ -20,3 +20,8 @@ export async function logoutService() {
   const response = await axiosInstance.post(endpoints.logout);
   return response;
 }
+
+export async function getAllUserService() {
+  const response = await axiosInstance.get(endpoints.getAllUser);
+  return response;
+}
