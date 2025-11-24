@@ -25,3 +25,13 @@ export async function getAllUserService() {
   const response = await axiosInstance.get(endpoints.getAllUser);
   return response;
 }
+
+export async function getMessageService(id) {
+  const response = await axiosInstance.get(`${endpoints.getMessage}/${id}`);
+  return response;
+}
+
+export async function sendMessageService(id) {
+  const response = await axiosInstance.get(`${endpoints.sendMessage}/${id}`);
+  return response;
+}

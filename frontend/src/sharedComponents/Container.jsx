@@ -4,7 +4,7 @@ function Container({ heading, children }) {
       <nav>
         <h2 className="bg-linear-to-r from-emerald-400 to-indigo- bg-clip-text text-transparent font-extrabold font-inconsolata text-3xl">{heading}</h2>
       </nav>
-      <div className="">
+      <div className="flex-1">
         {children}
       </div>
     </article>
