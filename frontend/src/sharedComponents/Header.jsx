@@ -1,13 +1,19 @@
-import { BellRing, Grip, LogOut, MessageSquareDot, Palette, Settings, User } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import { Grip, LogOut, MessageSquareDot, Moon, Palette, Settings, Sun, User } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutThunk } from '../store/AuthSlice';
+import { toggleTheme } from '../store/ThemeSlice';
 
 function Header() {
   const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
 
   function handleLogout() {
     dispatch(logoutThunk());
+  }
+
+  function handleTheme() {
+    dispatch(toggleTheme());
   }
 
   return (
@@ -19,14 +25,18 @@ function Header() {
 
       <div className="flex items-center gap-4">
 
-        <div className="dropdown dropdown-end hover:cursor-pointer">
+        <div className="hover:cursor-pointer" onClick={handleTheme}>
+          {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+        </div>
+
+        {/* <div className="dropdown dropdown-end hover:cursor-pointer">
           <BellRing size={23} tabIndex={0} role="button" className='outline-0 rounded-field' />
           <ul tabIndex="-1" className="menu dropdown-content bg-base-400 rounded-box z-10 mt-5 w-80 p-2 shadow-lg">
             <h3 className='text-center text-xl text-base-400'>Notifications</h3>
             <div className="divider m-1"></div>
             <li><Link to="/themes"><Palette size={20} /> Themes</Link></li>
           </ul>
-        </div>
+        </div> */}
 
         <Link to="/profile"><User size={23} /></Link>
 

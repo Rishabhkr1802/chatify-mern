@@ -15,7 +15,7 @@ function Sidebar() {
   }, [dispatch])
 
   return (
-    <aside className="p-3 min-w-[300px] shadow h-full overflow-auto">
+    <aside className="p-3 max-w-[100px] sm:max-w-[300px] shadow h-full overflow-auto">
       <Search />
       <div className="py-4 flex flex-col gap-3">
         { isLoading && <UsersLoadingSkeleton /> }

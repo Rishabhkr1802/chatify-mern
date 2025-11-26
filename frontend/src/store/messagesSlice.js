@@ -19,9 +19,9 @@ export const getMessage = createAsyncThunk("message/getMessage",
 )
 
 export const sendMessage = createAsyncThunk("message/send",
-  async (userToChatID, thunkAPI) => {
+  async ({ id, mess }, thunkAPI) => {
     try {
-      const response = await sendMessageService(userToChatID);
+      const response = await sendMessageService(id, mess);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "message not sent")
@@ -55,7 +55,7 @@ const messagesSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.messages = action.payload;
+        // state.messages = action.payload.data;
         state.error = null;
       })
       .addCase(sendMessage.rejected, (state, action) => {

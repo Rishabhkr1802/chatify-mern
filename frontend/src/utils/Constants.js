@@ -6,5 +6,5 @@ export const endpoints = {
   updateProfile   : "/auth/update-profile",
   getAllUser      : "/user/get-all-users",
   getMessage      : "/message",
-  sendMessage     : "/send",
+  sendMessage     : "/message/send",
 }

@@ -31,7 +31,7 @@ export async function getMessageService(id) {
   return response;
 }
 
-export async function sendMessageService(id) {
-  const response = await axiosInstance.get(`${endpoints.sendMessage}/${id}`);
+export async function sendMessageService(id, data) {
+  const response = await axiosInstance.post(`${endpoints.sendMessage}/${id}`, data);
   return response;
 }

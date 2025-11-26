@@ -5,23 +5,24 @@ import Container from "../sharedComponents/Container";
 import MessageSkelaton from "../sharedComponents/Skelatons/MessageSkelaton";
 import { useParams } from "react-router-dom";
 import Messages from "../sharedComponents/Messages";
+import MessageInput from "../sharedComponents/MessageInput";
 
 function Chat() {
-  const { id: userToChatID }  = useParams();
-  const dispatch              = useDispatch();
-  const { messages, isLoading }         = useSelector((state) => state.messages);
-  console.log(messages)
+  const { id: userToChatID }    = useParams();
+  const dispatch                = useDispatch();
+  const { isLoading } = useSelector((state) => state.messages);
 
   useEffect(() => {
     dispatch(getMessage(userToChatID));
   }, [dispatch, userToChatID])
 
   return (
-    <Container heading={"Chat"}>
-      {/* { isLoading && <MessageSkelaton />} */}
-      {/* {(messages.length > 0 && !isLoading ) ? <Messages message={messages}/> : <MessageSkelaton /> } */}
-      <Messages messages={messages}/>
-    </Container>
+    <>
+      <Container heading={"Chat"} footer={<MessageInput />}>
+        {isLoading && <MessageSkelaton />}
+        {!isLoading && <Messages />}
+      </Container>
+    </>
   )
 }
 

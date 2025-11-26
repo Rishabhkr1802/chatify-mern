@@ -1,7 +1,7 @@
 function MessageSkeleton() {
   return (
     <>
-      {[...Array(5)].map((_, i) => (
+      {[...Array(3)].map((_, i) => (
         <div key={i}>
           <div className="py-3 flex gap-3 items-center">
             <div className="skeleton w-10 h-10 rounded-full shrink-0"></div>

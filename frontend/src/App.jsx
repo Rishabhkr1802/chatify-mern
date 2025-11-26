@@ -3,20 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuthThunk } from "./store/AuthSlice";
 import { Toaster } from "react-hot-toast";
 import Router from "./routes/Router";
-// import Loader from "./sharedComponents/Loader";
 
 function App() {
   const dispatch      = useDispatch();
-  // const { isLoading } = useSelector((state) => state.auth);
+  const { theme }     = useSelector((state) => state.theme);
 
   useEffect(() => {
     dispatch(checkAuthThunk());
   }, [dispatch]);
 
-  // if (isLoading) return <Loader />
-
   return (
-    <div data-theme="light" className="font-poppins">
+    <div data-theme={theme} className="font-poppins">
       <Router />
       <Toaster />
     </div>

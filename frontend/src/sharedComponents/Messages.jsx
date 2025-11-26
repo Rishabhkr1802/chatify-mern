@@ -1,17 +1,18 @@
-function Messages({ messages }) {
+import { useSelector } from "react-redux";
+
+function Messages() {
+  const { user } = useSelector((state) => state.auth);
+  const { messages, isLoading } = useSelector((state) => state.messages);
   console.log(messages)
+
   return (
     <>
       {/* <div className="flex-1 px-6 overflow-y-auto py-8">
         {messages &&  messages.length > 0  ? (
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((msg) => (
-              <div
-                key={msg._id}
-                className={`chat ${msg.senderId === authUser._id ? "chat-end" : "chat-start"}`}
-              >
-                <div
-                  className={`chat-bubble relative ${msg.senderId === authUser._id
+              <div key={msg._id} className={`chat ${msg.senderId === user._id ? "chat-end" : "chat-start"}`}>
+                <div  className={`chat-bubble relative ${msg.senderId === user._id
                       ? "bg-cyan-600 text-white"
                       : "bg-slate-800 text-slate-200"
                     }`}
@@ -29,28 +30,30 @@ function Messages({ messages }) {
                 </div>
               </div>
             ))}
-            <div ref={messageEndRef} />
+            <div />
           </div>
         ) : "isMessagesLoading" ? (
           ""
         ) : (
-          "fs"
+          "https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
         )}
       </div> */}
 
       {messages.map((msg) => (
-        <div key={msg._id} className={`chat ${msg.senderId ? "chat-end" : "chat-start"}`}>
+        <div key={msg._id} className={`chat ${msg.receiverID === user?._id ? "chat-start" : "chat-end"}`}>
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
-              <img src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp" alt="Tailwind CSS chat bubble component" />
+              <img src={msg.receiverID === user._id ? "" : user.profilePic}  alt="Tailwind CSS chat bubble component" />
+              {/* // <img src={`${sg.senderId === user._id} ? ${user.profilePic}: ""`}  alt="Tailwind CSS chat bubble component" /> */}
+              {/* <img src={user.profilePic}  alt="Tailwind CSS chat bubble component" /> */}
             </div>
           </div>
           <div className="chat-header">
             {msg.senderId}
-            <time className="text-xs opacity-50">{msg.createdAt}</time>
+            <time className="chat-footer opacity-50">{new Date(msg.createdAt).toLocaleTimeString()}</time>
           </div>
           <div className="chat-bubble">{msg.text}</div>
-          <div className="chat-footer opacity-50">Delivered</div>
+            <time className="text-xs opacity-50">{'sent'}</time>
         </div>
       ))}
     </>

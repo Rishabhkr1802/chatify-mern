@@ -10,7 +10,7 @@ function SidebarCard({ user }) {
             <img src={user.profilePic || DummyUser} />
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full hidden sm:block">
           <h3 className="group-hover:text-white">{user.name}</h3>
           <p className="text-base-300 text-green-400 font-bold text-sm group-hover:text-white">Online</p>
         </div>
