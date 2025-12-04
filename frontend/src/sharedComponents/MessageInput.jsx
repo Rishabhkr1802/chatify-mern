@@ -8,7 +8,7 @@ function MessageInput() {
   const dispatch              = useDispatch();
   const navigate              = useNavigate();
   const { id: userToChatID }  = useParams();
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [file, setFile]       = useState(null);
 
   function handleSend() {

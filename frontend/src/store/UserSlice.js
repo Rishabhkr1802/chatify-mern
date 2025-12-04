@@ -3,6 +3,7 @@ import { getAllUserService } from "../services/api";
 
 const initialState = {
   users     : [],
+  selectedUser : null,
   isLoading : false,
   error     : false,
 }
@@ -21,6 +22,12 @@ export const getAllUserThunk = createAsyncThunk("user/getAllUsers",
 const userSlice = createSlice({
   name: "users",
   initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.selectedUser = action.payload
+    },
+  },
+  
   extraReducers: (builder) => {
 
     builder
@@ -39,4 +46,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setUser } = userSlice.actions
 export default userSlice.reducer;

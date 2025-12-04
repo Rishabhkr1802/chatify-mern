@@ -1,3 +1,5 @@
+import DummyUser from "../assets/images/DummyUser.jpg";
+
 function Messages({messages, user}) {
   return (
     <>
@@ -6,7 +8,7 @@ function Messages({messages, user}) {
         <div key={msg._id} className={`chat ${msg.receiverID === user?._id ? "chat-start" : "chat-end"}`}>
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
-              <img src={msg.receiverID === user._id ? "" : user.profilePic} alt="user" />
+              <img src={msg.receiverID === user._id ? DummyUser : user.profilePic} alt="user" />
             </div>
           </div>
           <div className="chat-header">
