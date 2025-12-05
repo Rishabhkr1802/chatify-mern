@@ -9,7 +9,7 @@ function Container({ heading, children, footer }) {
       <nav>
         { !selectedUser && <h2 className="bg-linear-to-r from-emerald-400 to-indigo- bg-clip-text text-transparent font-extrabold font-inconsolata text-3xl">{heading}</h2> }
         
-        { selectedUser && (
+        { selectedUser && window.location.pathname.includes("/chat") && (
           <div className="flex justify-start items-center gap-3 bg-base-300 shadow-md px-1 py-1">
             <div className="avatar">
               <div className="w-13 rounded-full">

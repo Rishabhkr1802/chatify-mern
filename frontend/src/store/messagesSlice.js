@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getMessageService, sendMessageService } from "../services/api";
+import { getSocket } from "../utils/Socket";
 
 const initialState = {
   messages  : [],
@@ -22,7 +23,40 @@ export const sendMessage = createAsyncThunk("message/send",
   async ({ id, mess }, thunkAPI) => {
     try {
       const response = await sendMessageService(id, mess);
-      return response.data;
+      // return response.data;
+      
+      const newMessage =  {
+        _id: Date.now(),
+        text: mess.text || "",
+        image: mess.image || null,
+        senderId: thunkAPI.getState().auth.user._id,
+        receiverID: id,
+        createdAt: new Date().toISOString()
+      };
+      const socket = getSocket();
+      if (socket) {
+        socket.emit("sendMessage", newMessage);
+      }
+
+      return newMessage;
+      // const savedMessage = response.data.data;
+
+      // const user = thunkAPI.getState().auth.user;
+
+      // // Create a REAL message object
+      // const newMessage = {
+      //   ...savedMessage,
+      //   senderId: user._id,
+      //   receiverId: id,
+      // };
+
+      // REAL-TIME SOCKET EMIT
+      // const socket = getSocket();
+      // if (socket) {
+      //   socket.emit("sendMessage", newMessage);
+      // }
+
+      // return newMessage;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "message not sent")
     }
@@ -32,6 +66,12 @@ export const sendMessage = createAsyncThunk("message/send",
 const messagesSlice = createSlice({
   name: "messages",
   initialState,
+  reducers: {
+    addMessage: (state, action) => {
+      state.messages.push(action.payload);
+    },
+  },
+
   extraReducers: (builder) => {
     //get Message
     builder
@@ -55,7 +95,7 @@ const messagesSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.isLoading = false;
-        // state.messages = action.payload.data;
+        state.messages.push(action.payload);
         state.error = null;
       })
       .addCase(sendMessage.rejected, (state, action) => {

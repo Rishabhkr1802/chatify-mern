@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import { connectSocket } from "../utils/Socket";
 
 export function GuestRoute() {
   const { user } = useSelector((state) => state.auth);
@@ -9,7 +11,14 @@ export function GuestRoute() {
 }
 
 export default function ProtectedRoute() {
-  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  // const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
-  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+   useEffect(() => {
+    if (isAuthenticated && user?._id) {
+      connectSocket(user._id);
+    }
+  }, [isAuthenticated, user]);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 }

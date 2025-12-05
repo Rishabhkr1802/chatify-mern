@@ -1,0 +1,16 @@
+import { io } from "socket.io-client";
+
+let socket = null;
+
+export function connectSocket(userId) {
+  if (!socket) {
+    socket = io("http://localhost:5000", {
+      query: { userId },
+      transports: ["websocket"],
+      withCredentials: true
+    });
+  }
+  return socket;
+};
+
+export const getSocket = () => socket;

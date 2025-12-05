@@ -6,7 +6,7 @@ const app     = express();
 const server  = http.createServer(app);
 const io      = new Server(server, {
   cors: {
-    origin  : ["http:localhost:3000"],
+    origin  : ["http://localhost:3000"],
     methods : ['GET', 'POST']
   }
 });
@@ -20,10 +20,21 @@ io.on("connection", (socket) => {
   console.log("user cocket connected", socket.id);
 
   const userId = socket.handshake.query.userId;
-	if (userId != "undefined") userSocketMap[userId] = socket.id;
+	if (userId && userId !== "undefined") userSocketMap[userId] = socket.id;
 
 	// io.emit() is used to send events to all the connected clients
 	io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    const receiverSocketId = userSocketMap[receiverId];
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("receiveMessage", {
+        senderId,
+        text
+      });
+    }
+  });
 
   socket.on("disconnect", () => {
 		console.log("user socket disconnected", socket.id);
