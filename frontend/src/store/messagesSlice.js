@@ -23,40 +23,14 @@ export const sendMessage = createAsyncThunk("message/send",
   async ({ id, mess }, thunkAPI) => {
     try {
       const response = await sendMessageService(id, mess);
-      // return response.data;
-      
-      const newMessage =  {
-        _id: Date.now(),
-        text: mess.text || "",
-        image: mess.image || null,
-        senderId: thunkAPI.getState().auth.user._id,
-        receiverID: id,
-        createdAt: new Date().toISOString()
-      };
+      const savedMessage = response.data.data;
+
       const socket = getSocket();
       if (socket) {
-        socket.emit("sendMessage", newMessage);
+        socket.emit("sendMessage", savedMessage);
       }
 
-      return newMessage;
-      // const savedMessage = response.data.data;
-
-      // const user = thunkAPI.getState().auth.user;
-
-      // // Create a REAL message object
-      // const newMessage = {
-      //   ...savedMessage,
-      //   senderId: user._id,
-      //   receiverId: id,
-      // };
-
-      // REAL-TIME SOCKET EMIT
-      // const socket = getSocket();
-      // if (socket) {
-      //   socket.emit("sendMessage", newMessage);
-      // }
-
-      // return newMessage;
+      return savedMessage;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "message not sent")
     }
@@ -105,4 +79,5 @@ const messagesSlice = createSlice({
   },
 });
 
+export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;

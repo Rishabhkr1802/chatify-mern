@@ -34,19 +34,19 @@ export async function sendMessage(req, res) {
 
     let imageUrl;
     if (image) {
-      const uploadedResponse = cloudinary.uploader.upload(image);
+      const uploadedResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadedResponse?.secure_url;
     }
-    const sendMessage = sendMessageService(myID, userToChatID, { text, imageUrl });
+    const sendMessage = await sendMessageService(myID, userToChatID, { text, imageUrl });
 
     const receiverSocketId = getReceiverSocketId(userToChatID);
 		if (receiverSocketId) {
 			// io.to(<socket_id>).emit() used to send events to specific client
-			io.to(receiverSocketId).emit("newMessage", newMessage);
+      io.to(receiverSocketId).emit("receiveMessage", sendMessage); 
 		}
 
     if (sendMessage) {
-      return res.status(200).json({ success: true, message: "send messages successfully" });
+      return res.status(200).json({ success: true, message: "send messages successfully", data: sendMessage });
     } else {
       res.status(422).json({ success: false, message: "Something went wrong" });
     }

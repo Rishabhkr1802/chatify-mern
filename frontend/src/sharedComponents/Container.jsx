@@ -7,9 +7,7 @@ function Container({ heading, children, footer }) {
   return (
     <article className="flex flex-col gap-3 h-full relative">
       <nav>
-        { !selectedUser && <h2 className="bg-linear-to-r from-emerald-400 to-indigo- bg-clip-text text-transparent font-extrabold font-inconsolata text-3xl">{heading}</h2> }
-        
-        { selectedUser && window.location.pathname.includes("/chat") && (
+        { selectedUser && window.location.pathname.includes("/chat") ? (
           <div className="flex justify-start items-center gap-3 bg-base-300 shadow-md px-1 py-1">
             <div className="avatar">
               <div className="w-13 rounded-full">
@@ -21,7 +19,7 @@ function Container({ heading, children, footer }) {
               <p className="text-base-300 text-green-400 font-bold text-sm group-hover:text-white">Online</p>
             </div>
           </div>
-        )}
+        ) : <h2 className="bg-linear-to-r from-emerald-400 to-indigo- bg-clip-text text-transparent font-extrabold font-inconsolata text-3xl">{heading}</h2>}
       </nav>
 
       <div className="flex-1 overflow-y-auto">

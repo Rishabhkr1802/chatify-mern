@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessage, sendMessage } from "../store/messagesSlice";
+import { getMessage, addMessage  } from "../store/messagesSlice";
 import Container from "../sharedComponents/Container";
 import MessageSkelaton from "../sharedComponents/Skelatons/MessageSkelaton";
 import { useParams } from "react-router-dom";
 import Messages from "../sharedComponents/Messages";
 import MessageInput from "../sharedComponents/MessageInput";
 import { getSocket } from "../utils/Socket";
-// import { setUser } from "../store/UserSlice";
-// import { Socket } from "socket.io-client";
 
 function Chat() {
   const { id: userToChatID }    = useParams();
@@ -21,21 +19,14 @@ function Chat() {
     dispatch(getMessage(userToChatID));
   }, [dispatch, userToChatID])
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setUser(null));
-  //   };
-  // }, [dispatch])
-
   useEffect(() => {
     socket.on("receiveMessage", (msg) => {
-      // Only push message if it belongs to current chat user
-      if (
-        (msg.senderId === userToChatID && msg.receiverId === user._id) ||
-        (msg.senderId === user._id && msg.receiverId === userToChatID)
-      ) {
-        dispatch(sendMessage(msg));
-      }
+        if (
+            (msg.senderID === userToChatID && msg.receiverID === user._id) ||
+            (msg.senderID === user._id && msg.receiverID === userToChatID)
+        ) {
+            dispatch(addMessage(msg));
+        }
     });
 
     return () => {
