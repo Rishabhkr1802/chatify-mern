@@ -1,0 +1,6 @@
+import{j as e,a as r}from"./index-BdBuWQMs.js";import{C as o}from"./Container-dniRvY-U.js";import{c}from"./createLucideIcon-kgNFIYFX.js";import"./DummyUser-DHHqRRpg.js";/**
+ * @license lucide-react v0.554.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const n=[["path",{d:"M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z",key:"18887p"}]],i=c("message-square",n),l=()=>e.jsxs("div",{className:"flex flex-col items-center justify-center h-full text-center p-6",children:[e.jsx("div",{className:"size-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6 animate-bounce",children:e.jsx(i,{className:"size-10 text-emerald-400"})}),e.jsx("h3",{className:"text-xl font-semibold text-emerald-200 mb-2",children:"Select a conversation"}),e.jsx("p",{className:"text-slate-400 max-w-md",children:"Choose a contact from the sidebar to start chatting or continue a previous conversation."})]});function f(){const{user:t}=r(a=>a.auth),s=t.name.split(" ")[0];return e.jsx(o,{heading:`Welcome ${s} to chatify App`,children:e.jsx("div",{className:"flex items-center justify-center h-full w-full",children:e.jsx(l,{})})})}export{f as default};
