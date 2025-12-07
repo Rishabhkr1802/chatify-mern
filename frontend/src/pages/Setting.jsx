@@ -12,7 +12,7 @@ function Setting() {
   }
 
   return (
-    <Container heading={"Setting"}>
+    <Container heading={"Settings"}>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
         <Link to="/update-profile" className="card bg-base-200 rounded-lg border p-10 lg:px-10 lg:py-20 hover:bg-secondary hover:scale-95 hover:text-secondary-content">
           <div className="flex gap-5 items-center">

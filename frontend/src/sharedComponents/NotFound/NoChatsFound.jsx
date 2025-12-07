@@ -5,7 +5,7 @@ function NoChatsFound() {
   // const { setActiveTab } = useChatStore();
 
   return (
-    <div className="flex flex-col items-center justify-center max-w-[300px] py-10 text-center space-y-4">
+    <div className="flex flex-col items-center justify-center max-w-[100px] sm:max-w-[300px] py-10 text-center space-y-4">
       <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center">
         <User className="w-8 h-8 text-emerald-400 animate-bounce" />
       </div>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialTheme = localStorage.getItem("chatify-theme") || "light";
+const initialTheme = localStorage.getItem("chatify-theme") || "garden";
 
 const themeSlice = createSlice(
   {
