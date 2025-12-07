@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 let socket = null;
-const socketUrl = import.meta.env.MODE === "development" ? import.meta.env.VITE_SERVER_URL : window.location.origin;
+const socketUrl = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
 
 export function connectSocket(userId) {
   if (!socket) {

@@ -6,8 +6,8 @@ const app     = express();
 const server  = http.createServer(app);
 const io      = new Server(server, {
   cors: {
-    // origin  : [ process.env.FRONTEND_URL,"http://localhost:3000"],
-    origin: "*",
+    origin  : ["http://localhost:3000","https://chatify-mern-faxx.onrender.com", process.env.FRONTEND_URL],
+    // origin: "*",
     methods : ['GET', 'POST'],
     pingTimeout: 60000,
   }
