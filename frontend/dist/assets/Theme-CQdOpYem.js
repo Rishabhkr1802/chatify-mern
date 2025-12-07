@@ -1,4 +1,4 @@
-import{u as n,a as i,j as e,m as d}from"./index-BdBuWQMs.js";import{C as c}from"./Container-dniRvY-U.js";import{c as l}from"./createLucideIcon-kgNFIYFX.js";import"./DummyUser-DHHqRRpg.js";/**
+import{u as n,a as i,j as e,m as d}from"./index-BXGNlh9M.js";import{C as c}from"./Container-Cu6iMZmI.js";import{c as l}from"./createLucideIcon-B_s0ycGW.js";import"./DummyUser-DHHqRRpg.js";/**
  * @license lucide-react v0.554.0 - ISC
  *
  * This source code is licensed under the ISC license.
