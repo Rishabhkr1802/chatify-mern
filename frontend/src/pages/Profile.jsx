@@ -14,7 +14,7 @@ function Profile() {
         <div className="hover-3d">
           <div className="flex flex-col gap-4 flex-1">
             <h1 className="text-4xl bg-linear-to-r from-emerald-400 to-indigo-400 bg-clip-text text-transparent font-semibold animate-pulse">{user.name}</h1>
-            <p className="text-xl">{user.bio}</p>
+            { user.bio && <p className="text-xl">{user.bio}</p> }
             <p className="text-xl">{user.email}</p>
           </div>
         </div>

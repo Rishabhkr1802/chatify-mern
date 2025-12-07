@@ -22,7 +22,7 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(express.json({limit: '20kb'})) //For Accept form input
+app.use(express.json()) // {limit: '20kb'} For Accept form input
 app.use(express.urlencoded({extended: 'false', limit: '20kb'})) //For Accept data from URL like id,queryParams etc
 app.use(express.static("uploads"));
 app.use(cookieparser());

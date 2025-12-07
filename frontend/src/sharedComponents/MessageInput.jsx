@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { Paperclip, SendHorizontal, X } from 'lucide-react';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { sendMessage } from '../store/messagesSlice';
@@ -10,6 +10,13 @@ function MessageInput() {
   const { id: userToChatID }  = useParams();
   const [message, setMessage] = useState("");
   const [file, setFile]       = useState(null);
+
+  useEffect(() => {
+    if (message || file ) {
+      setMessage("");
+      setFile(null);
+    }
+  },[userToChatID]);
 
   function handleSend() {
     if (!message.trim() && !file) return;
@@ -61,7 +68,7 @@ function MessageInput() {
           </label>
           <input type="text" autoComplete='off' name="message" className="w-full border-emerald-400 outline-indigo-500 rounded-xl px-10 py-3 " placeholder="Type a message..." value={message} onChange={(e) => setMessage(e.target.value)} onKeyDown={handleKeyDown} />
           {/* <input type="file" name='file' className='top-1 left-2' /> */}
-          <button type='button' disabled={!message} className={`absolute top-2 right-3 ${!message ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={handleSend}>
+          <button type='button' disabled={!message && !file} className={`absolute top-2 right-3 ${!message && !file ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={handleSend}>
             <SendHorizontal size={30} className='' />
           </button>
         </div>

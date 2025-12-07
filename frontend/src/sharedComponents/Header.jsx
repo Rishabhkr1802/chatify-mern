@@ -42,7 +42,7 @@ function Header() {
 
         <div className="dropdown dropdown-end hover:cursor-pointer">
           <Grip size={24} tabIndex={0} role="button" className='outline-0 rounded-field' />
-          <ul tabIndex="-1" className="menu dropdown-content bg-base-400 rounded-box z-10 mt-5 w-40 p-2 shadow-lg">
+          <ul tabIndex="-1" className="menu dropdown-content bg-base-100 rounded-box z-10 mt-5 w-40 p-2 shadow-lg">
             <li><Link to="/themes"><Palette size={20} /> Themes</Link></li>
             <li><Link to="/setting"><Settings size={20} /> Setting</Link></li>
             <li><button onClick={handleLogout}><LogOut size={20} />Logout</button></li>

@@ -1,41 +1,42 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import DummyUser from "../assets/images/DummyUser.jpg";
 
 function Messages({messages, user}) {
   const scrollToBottom = useRef(null);
+  const { selectedUser } = useSelector(state => state.users);
 
   useEffect(() => {
-    scrollToBottom.current?.scrollIntoView({ behavior: "smooth", });
-  }, [messages]);
+    if (!messages.length) return;
 
-  // useEffect(() => {
-  //   const lastMsg = messages[messages.length - 1];
-  //   if (!lastMsg) return;
+    const lastMsg = messages[messages.length - 1];
+    if (!lastMsg) return;
+    const sentByMe = lastMsg.senderID === user._id;
 
-  //   const sentByMe = lastMsg.senderId === user._id;
-  //   if (!sentByMe) {
-  //     scrollToBottom.current?.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [messages, user._id]);
+    scrollToBottom.current?.scrollIntoView({
+      behavior: sentByMe ? "auto" : "smooth",
+    });
+  }, [messages, user._id]);
 
   return (
     <>
       {messages.map((msg) => (
-        <div key={msg._id} className={`chat ${msg.receiverID === user?._id ? "chat-start" : "chat-end"}`}>
+        <div key={msg._id} className={`chat ${msg.senderID === user?._id ? "chat-end" : "chat-start"}`}>
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
-              <img src={msg.receiverID === user._id ? DummyUser : user.profilePic} alt="user" />
+              <img src={msg.senderID === user._id ? user.profilePic : selectedUser.profilePic || DummyUser} alt="user" />
             </div>
           </div>
-          <div className="chat-header">
-            {/* {msg.senderId} */}
+
+          <div className="chat-header flex flex-col items-end gap-2">
             <time className="chat-footer opacity-50">{new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time>
+            {msg.image && (
+              <img src={msg.image} alt="Shared" className="rounded-lg h-30 object-cover cursor-pointer mb-1" />
+            )}
           </div>
-          {msg.image && (
-            <img src={msg.image} alt="Shared" className="rounded-lg h-48 object-cover" />
-          )}
-          <div className="chat-bubble relative">{msg.text}</div>
-          <time className="text-xs opacity-50">{'sent'}</time>
+          
+          {msg.text && ( <div className={`chat-bubble ${msg.senderID === user?._id ? "bg-primary text-primary-content" : "bg-secondary text-secondary-content"} relative`}>{msg.text}</div> )}
+          {msg.senderID === user._id &&  <time className="text-xs opacity-50">{'sent'}</time>}
         </div>
       ))}
       <div ref={scrollToBottom}></div>

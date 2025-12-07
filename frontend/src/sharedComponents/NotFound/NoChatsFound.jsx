@@ -1,4 +1,4 @@
-import { MessageCircleIcon, User } from "lucide-react";
+import { User } from "lucide-react";
 // import { useChatStore } from "../store/useChatStore";
 
 function NoChatsFound() {
@@ -7,7 +7,7 @@ function NoChatsFound() {
   return (
     <div className="flex flex-col items-center justify-center max-w-[300px] py-10 text-center space-y-4">
       <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center">
-        <User className="w-8 h-8 text-emerald-400" />
+        <User className="w-8 h-8 text-emerald-400 animate-bounce" />
       </div>
       <div>
         <h4 className="text-emerald-200 font-medium mb-1">No conversations yet</h4>

@@ -71,7 +71,7 @@ function Register() {
             </div>
 
             <div className="form-controls">
-              <button className="btn btn-primary text-lg w-full mt-4">Register</button>
+              <button className="btn bg-linear-to-r from-emerald-300 to-indigo-300 shadow text-lg w-full mt-4">Register</button>
             </div>
 
           </form>

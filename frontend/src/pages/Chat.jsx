@@ -13,7 +13,7 @@ function Chat() {
   const dispatch                = useDispatch();
   const { messages, isLoading } = useSelector((state) => state.messages);
   const { user }                = useSelector((state) => state.auth);
-  const socket = getSocket();
+  const socket                  = getSocket();
 
   useEffect(() => {
     dispatch(getMessage(userToChatID));

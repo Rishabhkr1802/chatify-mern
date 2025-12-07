@@ -63,7 +63,7 @@ function Login() {
             </div>
 
             <div className="form-controls">
-              <button className="btn btn-primary text-lg w-full mt-4">Login</button>
+              <button className="btn bg-linear-to-r from-emerald-300 to-indigo-300 shadow text-lg w-full mt-4">Login</button>
             </div>
 
           </form>

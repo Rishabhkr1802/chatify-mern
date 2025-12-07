@@ -41,6 +41,7 @@ io.on("connection", (socket) => {
   for (let key in userSocketMap) {
     if (userSocketMap[key] === socket.id) {
       delete userSocketMap[key];
+      io.emit("getOnlineUsers", Object.keys(userSocketMap));
       console.log("user socket disconnected", socket.id);
     }
   }

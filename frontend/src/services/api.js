@@ -35,3 +35,8 @@ export async function sendMessageService(id, data) {
   const response = await axiosInstance.post(`${endpoints.sendMessage}/${id}`, data);
   return response;
 }
+
+export async function updateProfileService(profileData) {
+  const response = await axiosInstance.post(endpoints.updateProfile, profileData);
+  return response;
+}

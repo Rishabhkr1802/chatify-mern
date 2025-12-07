@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { checkAuth, signupService, loginService, logoutService } from "../services/api";
+import { checkAuth, signupService, loginService, logoutService, updateProfileService } from "../services/api";
+import { getSocket } from "../utils/Socket";
 
 const initialState = {
   user            : null,
@@ -7,6 +8,7 @@ const initialState = {
   isLoggedIn      : false,
   isSignUp        : false,
   isLoading       : false,
+  isUpdateProfile : false,
   error           : null,
 }
 
@@ -47,9 +49,25 @@ export const logoutThunk = createAsyncThunk("auth/logout",
   async (_, thunkAPI) => {
     try {
       const response = await logoutService();
+      const socket = getSocket();
+
+      if (socket) {
+        socket.disconnect();
+      }
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "Logout failed");
+    }
+  }
+);
+
+export const updateProfileThunk = createAsyncThunk("auth/updateProfile",
+  async (profileData, thunkAPI) => {
+    try {
+      const response = await updateProfileService(profileData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Update Profile failed");
     }
   }
 );
@@ -122,6 +140,22 @@ const authSlice = createSlice({
       })
       .addCase(logoutThunk.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
+      });
+
+    // ----------- UPDATE PROFILE ----------
+    builder
+      .addCase(updateProfileThunk.pending, (state) => {
+        state.isUpdateProfile = true;
+      })
+      .addCase(updateProfileThunk.fulfilled, (state, action) => {
+        state.isUpdateProfile = false;
+        state.user = action.payload.updatedUser;
+        state.isAuthenticated = true;
+        state.isLoggedIn = true;
+      })
+      .addCase(updateProfileThunk.rejected, (state, action) => {
+        state.isUpdateProfile = false;
         state.error = action.payload;
       });
   },

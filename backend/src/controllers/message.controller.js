@@ -1,6 +1,7 @@
 import { getMessagesService, sendMessageService } from "../services/message.service.js";
 import { getReceiverSocketId, io } from "../socket/socketio.js";
 import User from "../models/User.model.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export async function getAllMessages(req, res) {
   try {

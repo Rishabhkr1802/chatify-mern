@@ -6,7 +6,7 @@ import SidebarCard from "./SidebarCard";
 import NoChatsFound from "./NotFound/NoChatsFound";
 import UsersLoadingSkeleton from "./Skelatons/UserLoadingSkelaton";
 
-function Sidebar() {
+function Sidebar({onlineUsers}) {
   const dispatch = useDispatch();
   const { users, isLoading } = useSelector((state) => state.users);
 
@@ -20,7 +20,7 @@ function Sidebar() {
       <div className="py-4 flex flex-col gap-3">
         { isLoading && <UsersLoadingSkeleton /> }
         { users && users.length === 0 && <NoChatsFound /> }
-        { users.map((user) => <SidebarCard key={user._id} user={user} />) }
+        { users.map((user) => <SidebarCard key={user._id} user={user} onlineUsers={onlineUsers} />) }
       </div>
     </aside>
   )

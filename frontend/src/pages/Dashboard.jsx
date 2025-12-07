@@ -1,14 +1,14 @@
+import { useSelector } from "react-redux";
 import Container from "../sharedComponents/Container";
 import NoConversationPlaceholder from "../sharedComponents/NotFound/NoConversationFound";
-// import image1 from "../assets/images/DashboardImage.jpg";
-// import image2 from "../assets/images/DashboardImageChat.jpg";
 
 function Dashboard() {
+  const { user }  = useSelector(state => state.auth);
+  const firstName = user.name.split(" ")[0];
   return (
-    <Container heading={"Welcome to Chatify App"}>
+    <Container heading={`Welcome ${firstName} to chatify App`}>
       <div className="flex items-center justify-center h-full w-full">
         <NoConversationPlaceholder />
-        {/* <img src={image2} alt="image" className="w-200 h-140 " /> */}
       </div>
     </Container>
   )

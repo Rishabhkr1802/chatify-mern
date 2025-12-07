@@ -8,10 +8,12 @@ const Login           = lazy( () => import("../pages/Login"));
 const Loader          = lazy( () => import("../sharedComponents/Loader"));
 const Register        = lazy( () => import("../pages/Register"));
 const Dashboard       = lazy( () => import("../pages/Dashboard"));
-const Settings        = lazy( () => import("../pages/Setting"));
-const Themes          = lazy( () => import("../pages/Theme"));
-const UpdateProfile   = lazy( () => import("../pages/Profile"));
 const Chat            = lazy( () => import("../pages/Chat"));
+const Themes          = lazy( () => import("../pages/Theme"));
+const Settings        = lazy( () => import("../pages/Setting"));
+const Profile         = lazy( () => import("../pages/Profile"));
+const UpdateProfile   = lazy( () => import("../pages/UpdateProfile"));
+const NotFound        = lazy( () => import("../sharedComponents/NotFound/404NotFound"));
 
 const routes = createBrowserRouter([
     { element: <GuestRoute />, children: [
@@ -25,12 +27,13 @@ const routes = createBrowserRouter([
           { path: "/chat/:id", element: <Chat /> },
           { path: "/setting",  element: <Settings /> },
           { path: "/themes",   element: <Themes /> },
-          { path: "/profile",  element: <UpdateProfile /> },
+          { path: "/profile",  element: <Profile /> },
+          { path: "/update-profile",  element: <UpdateProfile /> },
         ]
       }
     ]
   },
-  { path: "*", element: "404 Not Found"},
+  { path: "*", element: <NotFound/>},
 ]);
 
 function Router() {
