@@ -6,7 +6,7 @@ const app     = express();
 const server  = http.createServer(app);
 const io      = new Server(server, {
   cors: {
-    origin  : ["http://localhost:3000","https://chatify-mern-faxx.onrender.com", process.env.FRONTEND_URL],
+    origin  : ["https://chatify-mern-faxx.onrender.com","http://localhost:3000", process.env.FRONTEND_URL],
     // origin: "*",
     methods : ['GET', 'POST'],
     pingTimeout: 60000,
@@ -22,7 +22,8 @@ io.on("connection", (socket) => {
   console.log("user socket connected", socket.id);
 
   const userId = socket.handshake.query.userId;
-	if (userId && userId !== "undefined") userSocketMap[userId] = socket.id;
+  if (userId) userSocketMap[userId] = socket.id;
+	// if (userId && userId !== "undefined") userSocketMap[userId] = socket.id;
 
 	// io.emit() is used to send events to all the connected clients
 	io.emit("getOnlineUsers", Object.keys(userSocketMap));
